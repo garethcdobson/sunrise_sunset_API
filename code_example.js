@@ -11,7 +11,8 @@ function randomNumberBetween(from, to) {
 
 // Generate 10 random co-ordinates and output API GET request results for each set
 for (i=0; i<10; i++) {
-     let lat = randomNumberBetween(-90, 90);
+     // Removing extreme latitude bands where daylight / night can last for 24 hours
+     let lat = randomNumberBetween(-70, 70);
      let long = randomNumberBetween(-180, 180);
 
      promises.push(
