@@ -7,7 +7,23 @@ let longArray = [];
 
 function randomNumberBetween(from, to) {
      return (Math.random() * (to - from) + from).toFixed(7);
+};
+
+function indexOfSmallest(array) {
+     var lowest = 0;
+     for (var i = 1; i < array.length; i++) {
+          if (array[i] < array[lowest]) lowest = i;
+     }
+     return lowest;
 }
+
+function findEarlySunrise() {
+     let sunriseList = [];
+     results.forEach(({ sunrise }) => sunriseList.push(Date.parse(sunrise)));
+     console.log("Earliest sunrise at co-ordinates with index: " + indexOfSmallest(sunriseList))
+     // Remember that index includes 0 at first position
+     console.log(results[indexOfSmallest(sunriseList)]);
+};
 
 // Generate 10 random co-ordinates and output API GET request results for each set
 for (i=0; i<10; i++) {
@@ -20,7 +36,7 @@ for (i=0; i<10; i++) {
                params: {
                     lat: lat,
                     lng: long,
-                    formatted: 1,
+                    formatted: 0,
                }
           }).then(response => {
                results.push(response.data.results);
@@ -37,9 +53,12 @@ Promise.all(promises).then(() => {
           // Co-ordinates match with corresponding indices
           console.log("Latitudes:")
           console.log(latArray);
-          console.log("Latitudes:")
+          console.log("Longitudes:")
           console.log(longArray);
-          console.log(results);
+          // console.log(results);
+     }).then(() => {
+          // Find and output results associated with the earliest sunrise from generated co-ordinates
+          findEarlySunrise();
      }).catch(error => {
           console.log(error);
      }
