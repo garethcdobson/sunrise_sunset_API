@@ -9,6 +9,7 @@ function randomNumberBetween(from, to) {
      return (Math.random() * (to - from) + from).toFixed(7);
 };
 
+// Return index of the smallest value in an array
 function indexOfSmallest(array) {
      var lowest = 0;
      for (var i = 1; i < array.length; i++) {
@@ -17,6 +18,7 @@ function indexOfSmallest(array) {
      return lowest;
 }
 
+// Find and output results associated with the earliest sunrise from generated co-ordinates
 function findEarlySunrise() {
      let sunriseList = [];
      results.forEach(({ sunrise }) => sunriseList.push(Date.parse(sunrise)));
@@ -26,7 +28,7 @@ function findEarlySunrise() {
 };
 
 // Generate 10 random co-ordinates and output API GET request results for each set
-for (i=0; i<10; i++) {
+for (var i=0; i<10; i++) {
      // Removing extreme latitude bands where daylight / night can last for 24 hours
      let lat = randomNumberBetween(-70, 70);
      let long = randomNumberBetween(-180, 180);
@@ -57,7 +59,6 @@ Promise.all(promises).then(() => {
           console.log(longArray);
           // console.log(results);
      }).then(() => {
-          // Find and output results associated with the earliest sunrise from generated co-ordinates
           findEarlySunrise();
      }).catch(error => {
           console.log(error);
