@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+console.log("Sennen Tech Code Task (Node.js App)");
+
 let results = [];
 let promises = [];
 let latArray = [];
@@ -27,37 +29,43 @@ function findEarlySunrise() {
      console.log(results[indexOfSmallest(sunriseList)]);
 };
 
-// Generate 10 random co-ordinates and output API GET request results for each set
-for (var i=0; i<10; i++) {
+console.log("Running staggered API requests, please wait...");
+
+// Generate 50 random co-ordinates and output API GET request results for each set
+for (var i=0; i<50; i++) {
      // Removing extreme latitude bands where daylight / night can last for 24 hours
      let lat = randomNumberBetween(-70, 70);
      let long = randomNumberBetween(-180, 180);
-
-     promises.push(
-          axios.get('https://api.sunrise-sunset.org/json?', {
-               params: {
-                    lat: lat,
-                    lng: long,
-                    formatted: 0,
-               }
-          }).then(response => {
-               results.push(response.data.results);
-          }).then(() => {
-               latArray.push(lat);
-               longArray.push(long);
-          }).catch(error => {
-               console.log(error);
-          })
-     )
+     // Create promises and add to promises array
+     let promise = new Promise((resolve, reject) =>
+          setTimeout(() => {
+               return axios.get('https://api.sunrise-sunset.org/json?', {
+                    params: {
+                         lat: lat,
+                         lng: long,
+                         formatted: 0,
+                    }
+               }).then(response => {
+                    resolve(results.push(response.data.results));
+               }).then(() => {
+                    latArray.push(lat);
+                    longArray.push(long);
+               }).catch(
+                    error => reject(error)
+               )},
+               // Multiply delay by index to ensure timeouts are staggered
+               (1000 * i)
+          )
+     );
+     promises.push(promise);
 };
 
 Promise.all(promises).then(() => {
-          // Co-ordinates match with corresponding indices
+          console.log("Number of results returned: " + results.length);
           console.log("Latitudes:")
           console.log(latArray);
           console.log("Longitudes:")
           console.log(longArray);
-          // console.log(results);
      }).then(() => {
           findEarlySunrise();
      }).catch(error => {
