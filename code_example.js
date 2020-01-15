@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-console.log("Sennen Tech Code Task (Node.js App)");
+console.log("Sennen Tech Code Task\nGenerating 100 random co-ordinates and finding the earliest sunrise (UTC Time)");
 
 let results = [];
 let promises = [];
@@ -14,27 +14,31 @@ function randomNumberBetween(from, to) {
 // Return index of the smallest value in an array
 function indexOfSmallest(array) {
      var lowest = 0;
-     for (var i = 1; i < array.length; i++) {
-          if (array[i] < array[lowest]) lowest = i;
+     for (var i=1; i<array.length; i++) {
+          if (array[i]<array[lowest]) lowest = i;
      }
      return lowest;
-}
+};
 
 // Find and output results associated with the earliest sunrise from generated co-ordinates
 function findEarlySunrise() {
      let sunriseList = [];
+
      results.forEach(({ sunrise }) => sunriseList.push(Date.parse(sunrise)));
-     console.log("Earliest sunrise at co-ordinates with index: " + indexOfSmallest(sunriseList))
-     // Remember that index includes 0 at first position
-     console.log(results[indexOfSmallest(sunriseList)]);
+     console.log("Earliest sunrise is found at: " + latArray[indexOfSmallest(sunriseList)] + ", " + longArray[indexOfSmallest(sunriseList)] + ".");
+
+     var result = results[indexOfSmallest(sunriseList)];
+     var day_length = Math.round((result.day_length / 3600) * 10) / 10;
+
+     console.log("Day is " + day_length + " hours long at these co-ordinates.");
 };
 
 console.log("Running staggered API requests, please wait...");
 
-// Generate 50 random co-ordinates and output API GET request results for each set
-for (var i=0; i<50; i++) {
+// Generate 100 random co-ordinates and output API GET request results for each set (data requested based on default of current date)
+for (var i=0; i<100; i++) {
      // Removing extreme latitude bands where daylight / night can last for 24 hours
-     let lat = randomNumberBetween(-70, 70);
+     let lat = randomNumberBetween(-60, 60);
      let long = randomNumberBetween(-180, 180);
      // Create promises and add to promises array
      let promise = new Promise((resolve, reject) =>
@@ -54,7 +58,7 @@ for (var i=0; i<50; i++) {
                     error => reject(error)
                )},
                // Multiply delay by index to ensure timeouts are staggered
-               (1000 * i)
+               (500 * i)
           )
      );
      promises.push(promise);
@@ -62,10 +66,6 @@ for (var i=0; i<50; i++) {
 
 Promise.all(promises).then(() => {
           console.log("Number of results returned: " + results.length);
-          console.log("Latitudes:")
-          console.log(latArray);
-          console.log("Longitudes:")
-          console.log(longArray);
      }).then(() => {
           findEarlySunrise();
      }).catch(error => {
