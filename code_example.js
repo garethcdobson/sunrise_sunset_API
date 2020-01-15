@@ -20,17 +20,25 @@ function indexOfSmallest(array) {
      return lowest;
 };
 
+function convertTime(stringFormat){
+     var time = new Date(stringFormat).toUTCString();
+     return time;
+}
+
 // Find and output results associated with the earliest sunrise from generated co-ordinates
 function findEarlySunrise() {
      let sunriseList = [];
 
      results.forEach(({ sunrise }) => sunriseList.push(Date.parse(sunrise)));
-     console.log("Earliest sunrise is found at: " + latArray[indexOfSmallest(sunriseList)] + ", " + longArray[indexOfSmallest(sunriseList)] + ".");
-
      var result = results[indexOfSmallest(sunriseList)];
-     var day_length = Math.round((result.day_length / 3600) * 10) / 10;
 
+     console.log("Earliest sunrise is found at: " + latArray[indexOfSmallest(sunriseList)] + ", " + longArray[indexOfSmallest(sunriseList)] + ".");
+     console.log("Sunrise is at: " + convertTime(result.sunrise) + ".");
+
+     var day_length = Math.round((result.day_length / 3600) * 10) / 10;
      console.log("Day is " + day_length + " hours long at these co-ordinates.");
+
+     console.log(result);
 };
 
 console.log("Running staggered API requests, please wait...");
