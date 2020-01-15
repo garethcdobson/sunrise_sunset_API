@@ -1,0 +1,23 @@
+{
+  "name": "sennen_tech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "code_example.js",
+  "dependencies": {
+    "axios": "^0.19.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garethcdobson/sunrise_sunset_API.git"
+  },
+  "author": "Gareth Dobson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garethcdobson/sunrise_sunset_API/issues"
+  },
+  "homepage": "https://github.com/garethcdobson/sunrise_sunset_API#readme"
+}
