@@ -1,4 +1,18 @@
 ## Sennen Tech Code Task
+### Setup & Running Script
+Instructions to run script locally, npm package manager is required.  
+Clone the git repo
+```
+git@github.com:garethcdobson/sunrise_sunset_API.git
+```
+Install dependencies
+```
+npm install
+```
+Run the relevant JS file using Node.js
+```
+node code_example.js
+```
 ### Brief
 
 Write a small example in Typescript (Javascript also acceptable) / nodejs.  
