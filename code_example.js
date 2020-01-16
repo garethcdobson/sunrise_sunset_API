@@ -7,6 +7,7 @@ let promises = [];
 let latArray = [];
 let longArray = [];
 
+// Generate random number between a specified range
 function randomNumberBetween(from, to) {
      return (Math.random() * (to - from) + from).toFixed(7);
 };
@@ -20,6 +21,7 @@ function indexOfSmallest(array) {
      return lowest;
 };
 
+// Convert unformatted datetime to UTC string
 function convertTime(stringFormat){
      var time = new Date(stringFormat).toUTCString();
      return time;
@@ -27,18 +29,31 @@ function convertTime(stringFormat){
 
 // Find and output results associated with the earliest sunrise from generated co-ordinates
 function findEarlySunrise() {
-     let sunriseList = [];
+     var sunriseList = [];
 
      results.forEach(({ sunrise }) => sunriseList.push(Date.parse(sunrise)));
      var result = results[indexOfSmallest(sunriseList)];
 
-     console.log("Earliest sunrise is found at: " + latArray[indexOfSmallest(sunriseList)] + ", " + longArray[indexOfSmallest(sunriseList)] + ".");
-     console.log("Sunrise is at: " + convertTime(result.sunrise) + ".");
+     console.log("Earliest sunrise is found at: " + latArray[indexOfSmallest(sunriseList)] + ", " + longArray[indexOfSmallest(sunriseList)]);
+     console.log("Sunrise is at: " + convertTime(result.sunrise));
 
      var day_length = Math.round((result.day_length / 3600) * 10) / 10;
-     console.log("Day is " + day_length + " hours long at these co-ordinates.");
+     console.log("Day is " + day_length + " hours long at these co-ordinates");
 
-     console.log(result);
+     // console.log(result);
+};
+
+// Find average of an array of numbers using reduce array function
+function average(nums) {
+    return nums.reduce((a, b) => (a + b)) / nums.length;
+};
+
+// Calculate average solar noon from generated points
+function findAverageSolarNoon(){
+     var solarNoons = [];
+     results.map(result => solarNoons.push(Date.parse(result.solar_noon)));
+     var avergaeSolarNoon = convertTime(average(solarNoons));
+     console.log("The average Solar Noon for the 100 generated points is: " + avergaeSolarNoon);
 };
 
 console.log("Running staggered API requests, please wait...");
@@ -76,6 +91,8 @@ Promise.all(promises).then(() => {
           console.log("Number of results returned: " + results.length);
      }).then(() => {
           findEarlySunrise();
+     }).then(() => {
+          findAverageSolarNoon();
      }).catch(error => {
           console.log(error);
      }
