@@ -1,4 +1,4 @@
-## Sennen Tech Code Task
+## Tech Code Task
 ### Setup & Running Script
 Instructions to run script locally, npm package manager is required.  
 Clone the git repo
